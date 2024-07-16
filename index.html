@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Navitech</title>
+    <link rel="stylesheet" type="text/css" href="stylesheet.css">
+</head>
+<body>
+    <div class="header">
+        <img src="navitech-logo.png" alt="Navitech Logo">
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">About us</a>
+        </nav>
+        <div class="dropdown profile">
+            <img id="profile-photo" src="profile-icon.png" alt="Profile Icon" style="cursor: pointer;">
+            <div class="dropdown-content">
+                <button onclick="toggleProfileUpdate()">Update Profile</button>
+                <button onclick="showFavorites()">Favorites</button>
+                <button onclick="logout()">Logout</button>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <h1>Welcome, <span id="username-display"></span>!</h1>
+        <div class="profile-update hidden" id="profile-update">
+            <h2>Update Profile</h2>
+            <input type="text" id="update-username" placeholder="New Username">
+            <input type="file" id="update-photo">
+            <button onclick="updateProfile()">Save Changes</button>
+        </div>
+        <div class="favorites hidden" id="favorites">
+            <h2>Your Favorites</h2>
+            <button class="close-button" onclick="closeFavorites()">Close</button>
+            <div id="favorite-list"></div>
+        </div>
+        <div class="sidebar">
+            <h2>Phone Finder</h2>
+            <button onclick="filterPhones('All')">All</button>
+            <button onclick="filterPhones('Samsung')">Samsung</button>
+            <button onclick="filterPhones('Vivo')">Vivo</button>
+            <button onclick="filterPhones('Oppo')">Oppo</button>
+            <button onclick="filterPhones('Xiaomi')">Xiaomi</button>
+            <button onclick="filterPhones('Realme')">Realme</button>
+            <button onclick="filterPhones('Apple')">Apple</button>
+            <button onclick="filterPhones('Lenovo')">Lenovo</button>
+            <button onclick="filterPhones('Nokia')">Nokia</button>
+            <button onclick="filterPhones('Sony')">Sony</button>
+            <button onclick="filterPhones('LG')">LG</button>
+            <button onclick="filterPhones('Google')">Google</button>
+            <button onclick="filterPhones('Honor')">Honor</button>
+            <button onclick="filterPhones('Asus')">Asus</button>
+            <button onclick="filterPhones('Infinix')">Infinix</button>
+            <button onclick="filterPhones('Techno')">Techno</button>
+            <button onclick="filterPhones('Itel')">Itel</button>
+        </div>
+        <div class="main" id="phoneList"></div>
+    </div>
+    <div class="footer">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+    </div>
+
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <div id="specs"></div>
+            <button onclick="showReviews()">Reviews</button>
+            <div id="reviews" style="display:none;">
+                <h3>Reviews</h3>
+                <div id="reviewList" class="review-list"></div>
+                <textarea id="newReview" placeholder="Write your review here"></textarea>
+                <button onclick="addReview()">Add Review</button>
+            </div>
+            <button onclick="addToFavorites()">Add to Favorites</button>
+        </div>
+    </div>
+
+    <div class="chatbot-container" id="chatbot-container">
+        <div class="chat-header">
+            <h2>Chatbot</h2>
+            <button class="close-chat" onclick="toggleChatbot()">X</button>
+        </div>
+        <div class="chat-content" id="chat-content"></div>
+        <input type="text" id="chat-input" placeholder="Type a message..." onkeypress="sendMessage(event)">
+    </div>
+    <button class="chatbot-button" onclick="toggleChatbot()">Chat</button>
+
+    <script src="javascript.js"> </script>
+</body>
+</html>

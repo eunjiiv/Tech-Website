@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" type="text/css" href="sign-up.css">
+</head>
+<body>
+    <div id="form-container">
+        <form id="sign-up-form" action="">
+            <label for="first-name">First Name:</label>
+            <input type="text" id="first-name" name="first-name" required>
+            <label for="last-name">Last Name:</label>
+            <input type="text" id="last-name" name="last-name" required>
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+            <label for="sign-up-email">Email:</label>
+            <input type="email" id="sign-up-email" name="email" required>
+            <label for="sign-up-password">Password:</label>
+            <input type="password" id="sign-up-password" name="password" required>
+            <button type="submit" name="signUp">Sign up</button>
+            <p>Already have an account? <a id="sign-in-link" href="#">Sign In</a></p>
+        </form>
+        <form id="sign-in-form" action="" style="display: none;">
+            <label for="sign-in-email">Email:</label>
+            <input type="email" id="sign-in-email" name="email" required>
+            <label for="sign-in-password">Password:</label>
+            <input type="password" id="sign-in-password" name="password" required>
+            <button type="submit">Sign In</button>
+            <p>You don't have an account? <a id="sign-up-link" href="#">Sign Up</a></p>
+        </form>
+    </div>
+    <script src="sign-up.js"></script>
+</body>
+</html>

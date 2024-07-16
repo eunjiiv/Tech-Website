@@ -1,0 +1,230 @@
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgb(0,0,0);
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+.close-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.close-button:hover {
+    background-color: #d32f2f;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+.review {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.review img {
+    border: 1px solid #ddd;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.reactions {
+    margin-left: auto;
+    display: flex;
+    gap: 10px;
+}
+.reactions button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 5px;
+}
+.comment-controls {
+    display: flex;
+    gap: 5px;
+}
+.phone {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    cursor: pointer;
+}
+.phone img {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+}
+.hidden {
+    display: none;
+}
+.dropdown {
+    position: relative;
+    display: inline-block;
+}
+.dropdown-content {
+    display: none;
+    position: absolute;
+    background-color: #f9f9f9;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+.dropdown-content button {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    border: none;
+    background: none;
+    width: 100%;
+    text-align: left;
+}
+.dropdown-content button:hover {
+    background-color: #f1f1f1;
+}
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+.chatbot-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 300px;
+    background-color: #f9f9f9;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: none;
+    flex-direction: column;
+}
+.chat-header {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+}
+.chat-header h2 {
+    margin: 0;
+}
+.close-chat {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+.close-chat:focus {
+    outline: none;
+}
+.chat-content {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+}
+.chat-input {
+    width: calc(100% - 20px);
+    margin: 10px;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+.chat-button {
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    margin: 10px;
+    width: calc(100% - 20px);
+    font-size: 14px;
+}
+.chat-button:focus {
+    outline: none;
+}
+.chat-message {
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 10px;
+}
+.profile-pic {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+.user .message-bubble {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-left: 10px;
+}
+.chatbot .message-bubble {
+    background-color: #008CBA;
+    color: white;
+    padding: 10px;
+    border-radius: 10px;
+    margin-right: 10px;
+}
+.phone-details {
+    text-align: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 20px auto;
+    max-width: 600px;
+    background-color: #f9f9f9;
+}
+
+.phone-details h2 {
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+
+.phone-details img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    margin-bottom: 15px;
+}
+
+.phone-details p {
+    font-size: 16px;
+    line-height: 1.6;
+}

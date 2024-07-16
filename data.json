@@ -1,0 +1,96 @@
+{
+    "phones": [
+        {
+            "name": "Samsung Galaxy S23 Ultra",
+            "brand": "Samsung",
+            "image": "samsung-galaxy-s23-ultra.png",
+            "details": "Details about Samsung Galaxy S23 Ultra.",
+            "specs": "Display: 6.8 inches, Dynamic AMOLED 2X, 1440 x 3200 pixels\nProcessor: Qualcomm Snapdragon 8 Gen 2\nRAM: 12GB\nStorage: 256GB/512GB/1TB\nBattery: 5000mAh\nCamera: Quad - 108 MP (wide), 10 MP (periscope telephoto), 10 MP (telephoto), 12 MP (ultrawide)",
+            "reviews": [
+                {"username": "User1", "review": "Great phone!", "profile_image": "user1.png", "likes": 0, "dislikes": 0},
+                {"username": "User2", "review": "Could be better.", "profile_image": "user2.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Vivo Y27",
+            "brand": "Vivo",
+            "image": "vivo-y27.png",
+            "details": "Details about Vivo Y27.",
+            "specs": "Display: 6.51 inches, IPS LCD, 720 x 1600 pixels\nProcessor: MediaTek Helio P35\nRAM: 4GB\nStorage: 64GB\nBattery: 5000mAh\nCamera: Dual - 13 MP (wide), 2 MP (depth)",
+            "reviews": [
+                {"username": "User3", "review": "Affordable and reliable.", "profile_image": "user3.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Oppo A96",
+            "brand": "Oppo",
+            "image": "oppo-a96.png",
+            "details": "Details about Oppo A96.",
+            "specs": "Display: 6.43 inches, IPS LCD, 1080 x 2400 pixels\nProcessor: Qualcomm Snapdragon 680\nRAM: 8GB\nStorage: 128GB\nBattery: 5000mAh\nCamera: Dual - 50 MP (wide), 2 MP (depth)",
+            "reviews": [
+                {"username": "User4", "review": "Good value for the price.", "profile_image": "user4.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Xiaomi Redmi Note 11",
+            "brand": "Xiaomi",
+            "image": "xiaomi-redmi-note-11.png",
+            "details": "Details about Xiaomi Redmi Note 11.",
+            "specs": "Display: 6.43 inches, AMOLED, 1080 x 2400 pixels\nProcessor: Qualcomm Snapdragon 680\nRAM: 4GB/6GB\nStorage: 64GB/128GB\nBattery: 5000mAh\nCamera: Quad - 50 MP (wide), 8 MP (ultrawide), 2 MP (macro), 2 MP (depth)",
+            "reviews": [
+                {"username": "User5", "review": "Excellent battery life.", "profile_image": "user5.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Realme 9 Pro",
+            "brand": "Realme",
+            "image": "realme-9-pro.png",
+            "details": "Details about Realme 9 Pro.",
+            "specs": "Display: 6.6 inches, IPS LCD, 1080 x 2412 pixels\nProcessor: Qualcomm Snapdragon 695\nRAM: 6GB/8GB\nStorage: 128GB\nBattery: 5000mAh\nCamera: Triple - 64 MP (wide), 8 MP (ultrawide), 2 MP (macro)",
+            "reviews": [
+                {"username": "User6", "review": "Very fast and smooth performance.", "profile_image": "user6.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Apple iPhone 14 Pro",
+            "brand": "Apple",
+            "image": "iphone-14-pro.png",
+            "details": "Details about iPhone 14 Pro.",
+            "specs": "Display: 6.1 inches, Super Retina XDR OLED, 1170 x 2532 pixels\nProcessor: Apple A16 Bionic\nRAM: 6GB\nStorage: 128GB/256GB/512GB/1TB\nBattery: 3095mAh\nCamera: Triple - 48 MP (wide), 12 MP (telephoto), 12 MP (ultrawide)",
+            "reviews": [
+                {"username": "User7", "review": "Outstanding camera quality.", "profile_image": "user7.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Google Pixel 6",
+            "brand": "Google",
+            "image": "google-pixel-6.png",
+            "details": "Details about Google Pixel 6.",
+            "specs": "Display: 6.4 inches, AMOLED, 1080 x 2400 pixels\nProcessor: Google Tensor\nRAM: 8GB\nStorage: 128GB/256GB\nBattery: 4614mAh\nCamera: Dual - 50 MP (wide), 12 MP (ultrawide)",
+            "reviews": [
+                {"username": "User8", "review": "Pure Android experience.", "profile_image": "user8.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Honor 50",
+            "brand": "Honor",
+            "image": "honor-50.png",
+            "details": "Details about Honor 50.",
+            "specs": "Display: 6.57 inches, OLED, 1080 x 2340 pixels\nProcessor: Qualcomm Snapdragon 778G\nRAM: 8GB\nStorage: 128GB/256GB\nBattery: 4300mAh\nCamera: Quad - 108 MP (wide), 8 MP (ultrawide), 2 MP (macro), 2 MP (depth)",
+            "reviews": [
+                {"username": "User9", "review": "Amazing design.", "profile_image": "user9.png", "likes": 0, "dislikes": 0}
+            ]
+        },
+        {
+            "name": "Asus ROG Phone 5",
+            "brand": "Asus",
+            "image": "asus-rog-phone-5.png",
+            "details": "Details about Asus ROG Phone 5.",
+            "specs": "Display: 6.78 inches, AMOLED, 1080 x 2448 pixels\nProcessor: Qualcomm Snapdragon 888\nRAM: 8GB/12GB/16GB\nStorage: 128GB/256GB\nBattery: 6000mAh\nCamera: Triple - 64 MP (wide), 13 MP (ultrawide), 5 MP (macro)",
+            "reviews": [
+                {"username": "User10", "review": "Best gaming phone ever.", "profile_image": "user10.png", "likes": 0, "dislikes": 0}
+            ]
+        }
+       
+    ]
+}
