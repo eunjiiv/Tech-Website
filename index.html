@@ -11,7 +11,7 @@
         <img src="navitech-logo.png" alt="Navitech Logo">
         <nav>
             <a href="#">Home</a>
-            <a href="#">About us</a>
+            <a href="#about-us">About us</a>
         </nav>
         <div class="dropdown profile">
             <img id="profile-photo" src="profile-icon.png" alt="Profile Icon" style="cursor: pointer;">
@@ -22,19 +22,23 @@
             </div>
         </div>
     </div>
+    
     <div class="container">
         <h1>Welcome, <span id="username-display"></span>!</h1>
+        
         <div class="profile-update hidden" id="profile-update">
             <h2>Update Profile</h2>
             <input type="text" id="update-username" placeholder="New Username">
             <input type="file" id="update-photo">
             <button onclick="updateProfile()">Save Changes</button>
         </div>
+        
         <div class="favorites hidden" id="favorites">
             <h2>Your Favorites</h2>
             <button class="close-button" onclick="closeFavorites()">Close</button>
             <div id="favorite-list"></div>
         </div>
+        
         <div class="sidebar">
             <h2>Phone Finder</h2>
             <button onclick="filterPhones('All')">All</button>
@@ -55,8 +59,42 @@
             <button onclick="filterPhones('Techno')">Techno</button>
             <button onclick="filterPhones('Itel')">Itel</button>
         </div>
+        
         <div class="main" id="phoneList"></div>
     </div>
+
+    <section class="about-section" id="about-us">
+        <h2>About Us</h2>
+        <img src="your-image-url-here" alt="About Us Image">
+        <div class="about-text">
+            <p> about our company, mission, values, etc.</p>
+        </div>
+    </section>
+
+    <section class="team-section">
+        <h2>Our Team</h2>
+        <div class="team-member">
+            <img src="team-member-image-url" alt="Team Member">
+            <p>Team Member Name</p>
+        </div>
+        <div class="team-member">
+            <img src="team-member-image-url" alt="Team Member">
+            <p>Team Member Name</p>
+        </div>
+        <div class="team-member">
+            <img src="team-member-image-url" alt="Team Member">
+            <p>Team Member Name</p>
+        </div>
+        <div class="team-member">
+            <img src="team-member-image-url" alt="Team Member">
+            <p>Team Member Name</p>
+        </div>
+        <div class="team-member">
+            <img src="team-member-image-url" alt="Team Member">
+            <p>Team Member Name</p>
+        </div>
+    </section>
+
     <div class="footer">
         <a href="#">Privacy Policy</a>
         <a href="#">Terms & Conditions</a>
@@ -87,6 +125,6 @@
     </div>
     <button class="chatbot-button" onclick="toggleChatbot()">Chat</button>
 
-    <script src="javascript.js"> </script>
+    <script src="javascript.js"></script>
 </body>
 </html>
