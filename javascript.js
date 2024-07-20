@@ -257,6 +257,16 @@ function addToFavorites() {
     localStorage.setItem('favorites', JSON.stringify(favorites));
 }
 
+function removeFromFavorites() {
+    const favorites = JSON.parse(localStorage.getItem('favorites')) || [];
+    if (selectedPhone && favorites.includes(selectedPhone.name)) {
+        const index = favorites.indexOf(selectedPhone.name);
+        favorites.splice(index, 1);
+        localStorage.setItem('favorites', JSON.stringify(favorites));
+        alert('Removed from favorites');
+    }
+}
+
 function closeFavorites() {
     document.getElementById('favorites').classList.add('hidden');
 }
