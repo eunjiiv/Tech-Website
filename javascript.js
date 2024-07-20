@@ -115,52 +115,30 @@ function closeModal() {
     document.getElementById('myModal').style.display = 'none';
 }
 
-function showReviews() {
-    const reviewsDiv = document.getElementById('reviewList');
-    reviewsDiv.innerHTML = '';
-
-    const storedReviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
-    const initialReviews = selectedPhone.reviews || [];
-
-    initialReviews.forEach(review => {
-        if (!review.id) {
-            review.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
-        }
-    });
-
-    const reviews = [...initialReviews, ...storedReviews];
-
-    reviews.forEach(review => {
-        const reviewDiv = createReviewElement(review);
-        reviewsDiv.appendChild(reviewDiv);
-    });
-
-    // Add close button to reviews section
-    const closeBtn = document.createElement('button');
-    closeBtn.innerText = 'Close Reviews';
-    closeBtn.onclick = closeReviews;
-    reviewsDiv.appendChild(closeBtn);
-
-    document.getElementById('reviews').style.display = 'block'; 
-}
-
-function closeReviews() {
-    document.getElementById('reviews').style.display = 'none';
-}
-
 function createReviewElement(review) {
     const reviewDiv = document.createElement('div');
     reviewDiv.classList.add('review');
     
+    const likeButton = document.createElement('button');
+    likeButton.innerHTML = `👍 ${review.likes || 0}`;
+    likeButton.onclick = () => likeReview(review.id);
+
+    const dislikeButton = document.createElement('button');
+    dislikeButton.innerHTML = `👎 ${review.dislikes || 0}`;
+    dislikeButton.onclick = () => dislikeReview(review.id);
+
     reviewDiv.innerHTML = `
         <img src="${review.profile_image}" alt="${review.username}" width="40" height="40">
         <p><strong>${review.username}:</strong> ${review.review}</p>
-        <div class="reactions">
-            <button onclick="likeReview('${review.id}')">👍 ${review.likes || 0}</button>
-            <button onclick="dislikeReview('${review.id}')">👎 ${review.dislikes || 0}</button>
-        </div>
     `;
     
+    const reactionsDiv = document.createElement('div');
+    reactionsDiv.classList.add('reactions');
+    reactionsDiv.appendChild(likeButton);
+    reactionsDiv.appendChild(dislikeButton);
+
+    reviewDiv.appendChild(reactionsDiv);
+
     return reviewDiv;
 }
 
@@ -190,9 +168,20 @@ function likeReview(reviewId) {
     let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
     let review = reviews.find(r => r.id === reviewId);
 
-    if (review && !review.likedBy.includes(currentUser)) {
-        review.likes += 1;
-        review.likedBy.push(currentUser);
+    if (review) {
+        if (review.likedBy.includes(currentUser)) {
+            review.likes -= 1;
+            review.likedBy = review.likedBy.filter(user => user !== currentUser);
+        } else {
+            review.likes += 1;
+            review.likedBy.push(currentUser);
+
+            if (review.dislikedBy.includes(currentUser)) {
+                review.dislikes -= 1;
+                review.dislikedBy = review.dislikedBy.filter(user => user !== currentUser);
+            }
+        }
+
         localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
         showReviews();
     }
@@ -202,12 +191,55 @@ function dislikeReview(reviewId) {
     let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
     let review = reviews.find(r => r.id === reviewId);
 
-    if (review && !review.dislikedBy.includes(currentUser)) {
-        review.dislikes += 1;
-        review.dislikedBy.push(currentUser);
+    if (review) {
+        if (review.dislikedBy.includes(currentUser)) {
+            review.dislikes -= 1;
+            review.dislikedBy = review.dislikedBy.filter(user => user !== currentUser);
+        } else {
+            review.dislikes += 1;
+            review.dislikedBy.push(currentUser);
+
+            if (review.likedBy.includes(currentUser)) {
+                review.likes -= 1;
+                review.likedBy = review.likedBy.filter(user => user !== currentUser);
+            }
+        }
+
         localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
         showReviews();
     }
+}
+
+function showReviews() {
+    const reviewsDiv = document.getElementById('reviewList');
+    reviewsDiv.innerHTML = '';
+
+    const storedReviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
+    const initialReviews = selectedPhone.reviews || [];
+
+    initialReviews.forEach(review => {
+        if (!review.id) {
+            review.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
+        }
+    });
+
+    const reviews = [...initialReviews, ...storedReviews];
+
+    reviews.forEach(review => {
+        const reviewDiv = createReviewElement(review);
+        reviewsDiv.appendChild(reviewDiv);
+    });
+
+    const closeBtn = document.createElement('button');
+    closeBtn.innerText = 'Close Reviews';
+    closeBtn.onclick = closeReviews;
+    reviewsDiv.appendChild(closeBtn);
+
+    document.getElementById('reviews').style.display = 'block'; 
+}
+
+function closeReviews() {
+    document.getElementById('reviews').style.display = 'none';
 }
 
 function addToFavorites() {
