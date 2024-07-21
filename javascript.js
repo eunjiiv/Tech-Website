@@ -66,7 +66,7 @@ function logout() {
     localStorage.removeItem('username');
     localStorage.removeItem('userEmail');
     localStorage.removeItem('userPassword');
-    window.location.href = 'index.html';
+    window.location.href = 'frontpage.html';
 }
 
 fetch('data.json')
@@ -131,7 +131,20 @@ function createReviewElement(review) {
         <img src="${review.profile_image}" alt="${review.username}" width="40" height="40">
         <p><strong>${review.username}:</strong> ${review.review}</p>
     `;
-    
+
+    if (review.username === currentUser || review.username === 'Anonymous') {
+        const deleteButton = document.createElement('button');
+        deleteButton.innerText = 'Delete';
+        deleteButton.onclick = () => deleteReview(review.id);
+
+        const editButton = document.createElement('button');
+        editButton.innerText = 'Edit';
+        editButton.onclick = () => editReview(review.id, review.review);
+
+        reviewDiv.appendChild(deleteButton);
+        reviewDiv.appendChild(editButton);
+    }
+
     const reactionsDiv = document.createElement('div');
     reactionsDiv.classList.add('reactions');
     reactionsDiv.appendChild(likeButton);
@@ -144,12 +157,13 @@ function createReviewElement(review) {
 
 function addReview() {
     const newReviewContent = document.getElementById('newReview').value.trim();
+    const postAnonymously = document.getElementById('anonymousReview').checked;
     if (!newReviewContent) return;
 
     const newReview = {
         id: Date.now().toString(),
-        username: currentUser,
-        profile_image: localStorage.getItem('profilePhoto'),
+        username: postAnonymously ? 'Anonymous' : currentUser,
+        profile_image: postAnonymously ? 'anonymous-profile.png' : localStorage.getItem('profilePhoto'),
         review: newReviewContent,
         likes: 0,
         dislikes: 0,
@@ -160,7 +174,7 @@ function addReview() {
     let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     reviews.push(newReview);
     localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
-    document.getElementById('newReview').value = ''; 
+    document.getElementById('newReview').value = '';
     showReviews();
 }
 
@@ -235,7 +249,27 @@ function showReviews() {
     closeBtn.onclick = closeReviews;
     reviewsDiv.appendChild(closeBtn);
 
-    document.getElementById('reviews').style.display = 'block'; 
+    document.getElementById('reviews').style.display = 'block';
+}
+
+function deleteReview(reviewId) {
+    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
+    reviews = reviews.filter(review => review.id !== reviewId);
+    localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
+    showReviews();
+}
+
+function editReview(reviewId, currentReviewContent) {
+    const newReviewContent = prompt('Edit your review:', currentReviewContent);
+    if (newReviewContent) {
+        let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
+        let review = reviews.find(r => r.id === reviewId);
+        if (review) {
+            review.review = newReviewContent;
+            localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
+            showReviews();
+        }
+    }
 }
 
 function closeReviews() {
@@ -305,7 +339,7 @@ function addChatMessage(sender, username, message) {
     messageDiv.classList.add('chat-message', sender);
 
     const profilePic = document.createElement('img');
-    profilePic.src = profilePhoto || 'default-profile.png'; 
+    profilePic.src = profilePhoto || 'default-profile.png';
     profilePic.alt = 'Profile Icon';
     profilePic.classList.add('profile-pic');
 
@@ -322,7 +356,7 @@ function addChatMessage(sender, username, message) {
 
 function getChatbotResponse(userInput) {
     const response = generateChatbotResponse(userInput);
-    setTimeout(() => addChatMessage('chatbot', 'Chatbot', response), 500); 
+    setTimeout(() => addChatMessage('chatbot', 'Chatbot', response), 500);
 }
 
 function generateChatbotResponse(userInput) {
