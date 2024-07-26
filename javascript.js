@@ -100,14 +100,29 @@ function filterPhones(brand) {
 }
 
 function showSpecs(phoneName) {
-    selectedPhone = phonesData.find(phone => phone.name === phoneName);
+    const selectedPhone = phonesData.find(phone => phone.name === phoneName);
+    
+    let priceHTML = '';
+    if (selectedPhone.price) {
+        priceHTML = '<h3>Price:</h3>';
+        if (typeof selectedPhone.price === 'object') {
+            for (const [storage, price] of Object.entries(selectedPhone.price)) {
+                priceHTML += `<p>${storage}: ${price}</p>`;
+            }
+        } else {
+            priceHTML += `<p>${selectedPhone.price}</p>`;
+        }
+    }
+
     document.getElementById('specs').innerHTML = `
         <div class="phone-details">
             <h2>${selectedPhone.name}</h2>
             <img src="${selectedPhone.image}" alt="${selectedPhone.name}">
             <p>${selectedPhone.specs}</p>
+            ${priceHTML}
         </div>
     `;
+    
     document.getElementById('myModal').style.display = 'block';
 }
 
