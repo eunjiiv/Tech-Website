@@ -53,7 +53,7 @@ function createPhoneElement(phone) {
     const phoneDiv = document.createElement('div');
     phoneDiv.classList.add('phone');
     phoneDiv.innerHTML = `
-        <img src="${phone.image}" alt="${phone.name}">
+        <img src="${phone.image}" alt="${phone.name}" class="zoom-effect">
         <div class="details">
             <h3>${phone.name}</h3>
             <p>${phone.details}</p>
@@ -99,8 +99,43 @@ function filterPhones(brand) {
     displayPhones(filteredPhones);
 }
 
+function createMagnifier(imageElement) {
+    const magnifierGlass = document.createElement('div');
+    magnifierGlass.classList.add('magnifier-glass');
+    magnifierGlass.style.width = '100px'; 
+    magnifierGlass.style.height = '100px';
+    magnifierGlass.style.backgroundImage = `url(${imageElement.src})`;
+    magnifierGlass.style.backgroundRepeat = 'no-repeat';
+    magnifierGlass.style.backgroundSize = `${imageElement.width * 2}px ${imageElement.height * 2}px`;
+    
+    const container = document.createElement('div');
+    container.classList.add('magnifier-container');
+    imageElement.parentNode.replaceChild(container, imageElement);
+    container.appendChild(imageElement);
+    container.appendChild(magnifierGlass);
+    
+    container.addEventListener('mousemove', (e) => {
+        const rect = imageElement.getBoundingClientRect();
+        const x = e.clientX - rect.left;
+        const y = e.clientY - rect.top;
+        
+        const glassX = x - magnifierGlass.offsetWidth / 2;
+        const glassY = y - magnifierGlass.offsetHeight / 2;
+        
+        magnifierGlass.style.left = `${glassX}px`;
+        magnifierGlass.style.top = `${glassY}px`;
+        magnifierGlass.style.backgroundPosition = `-${x * 2 - magnifierGlass.offsetWidth / 2}px -${y * 2 - magnifierGlass.offsetHeight / 2}px`;
+        
+        magnifierGlass.classList.add('visible');
+    });
+
+    container.addEventListener('mouseleave', () => {
+        magnifierGlass.classList.remove('visible');
+    });
+}
+
 function showSpecs(phoneName) {
-    const selectedPhone = phonesData.find(phone => phone.name === phoneName);
+    selectedPhone = phonesData.find(phone => phone.name === phoneName);
     
     let priceHTML = '';
     if (selectedPhone.price) {
@@ -117,13 +152,17 @@ function showSpecs(phoneName) {
     document.getElementById('specs').innerHTML = `
         <div class="phone-details">
             <h2>${selectedPhone.name}</h2>
-            <img src="${selectedPhone.image}" alt="${selectedPhone.name}">
+            <img id="specs-image" src="${selectedPhone.image}" alt="${selectedPhone.name}">
             <p>${selectedPhone.specs}</p>
             ${priceHTML}
         </div>
     `;
     
     document.getElementById('myModal').style.display = 'block';
+    showReviews(); 
+
+    const specsImage = document.getElementById('specs-image');
+    createMagnifier(specsImage);
 }
 
 function closeModal() {
@@ -194,8 +233,15 @@ function addReview() {
 }
 
 function likeReview(reviewId) {
-    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
+    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     let review = reviews.find(r => r.id === reviewId);
+    if (!review) {
+        review = selectedPhone.reviews.find(r => r.id === reviewId);
+        if (review) {
+            review = { ...review };
+            reviews.push(review);
+        }
+    }
 
     if (review) {
         if (review.likedBy.includes(currentUser)) {
@@ -217,8 +263,14 @@ function likeReview(reviewId) {
 }
 
 function dislikeReview(reviewId) {
-    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
+    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     let review = reviews.find(r => r.id === reviewId);
+    if (!review) {
+        review = selectedPhone.reviews.find(r => r.id === reviewId);
+        if (review) {
+            review = { ...review };
+            reviews.push(review); 
+    }
 
     if (review) {
         if (review.dislikedBy.includes(currentUser)) {
@@ -246,13 +298,8 @@ function showReviews() {
     const storedReviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     const initialReviews = selectedPhone.reviews || [];
 
-    initialReviews.forEach(review => {
-        if (!review.id) {
-            review.id = Date.now().toString() + Math.random().toString(36).substr(2, 9);
-        }
-    });
-
-    const reviews = [...initialReviews, ...storedReviews];
+    const reviews = [...initialReviews, ...storedReviews.filter(storedReview => 
+        !initialReviews.some(initialReview => initialReview.id === storedReview.id))];
 
     reviews.forEach(review => {
         const reviewDiv = createReviewElement(review);
@@ -267,28 +314,29 @@ function showReviews() {
     document.getElementById('reviews').style.display = 'block';
 }
 
+function closeReviews() {
+    document.getElementById('reviews').style.display = 'none';
+}
+
 function deleteReview(reviewId) {
     let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
-    reviews = reviews.filter(review => review.id !== reviewId);
+    reviews = reviews.filter(r => r.id !== reviewId);
     localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
     showReviews();
 }
 
-function editReview(reviewId, currentReviewContent) {
-    const newReviewContent = prompt('Edit your review:', currentReviewContent);
-    if (newReviewContent) {
-        let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
-        let review = reviews.find(r => r.id === reviewId);
-        if (review) {
-            review.review = newReviewContent;
-            localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
-            showReviews();
-        }
-    }
-}
+function editReview(reviewId, oldReview) {
+    const newReviewContent = prompt('Edit your review:', oldReview);
+    if (newReviewContent === null || newReviewContent === '') return;
 
-function closeReviews() {
-    document.getElementById('reviews').style.display = 'none';
+    let reviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`));
+    const reviewIndex = reviews.findIndex(r => r.id === reviewId);
+
+    if (reviewIndex !== -1) {
+        reviews[reviewIndex].review = newReviewContent;
+        localStorage.setItem(`reviews_${selectedPhone.name}`, JSON.stringify(reviews));
+        showReviews();
+    }
 }
 
 function addToFavorites() {
@@ -337,15 +385,19 @@ function toggleChatbot() {
     chatbotContainer.style.display = chatbotContainer.style.display === 'none' ? 'flex' : 'none';
 }
 
-function sendMessage(event) {
-    if (event.key === 'Enter') {
+function sendMessage(event, fromButton = false) {
+    if (event.key === 'Enter' || fromButton) {
         const userInput = document.getElementById('chat-input').value.trim();
         if (userInput) {
-            addChatMessage('username', currentUser, userInput);
+            addChatMessage('user', 'You', userInput); 
             getChatbotResponse(userInput);
             document.getElementById('chat-input').value = '';
         }
     }
+}
+
+function sendMessageFromButton() {
+    sendMessage({ key: 'Enter' }, true);
 }
 
 function addChatMessage(sender, username, message) {
@@ -354,8 +406,11 @@ function addChatMessage(sender, username, message) {
     messageDiv.classList.add('chat-message', sender);
 
     const profilePic = document.createElement('img');
-    profilePic.src = profilePhoto || 'default-profile.png';
-    profilePic.alt = 'Profile Icon';
+    if (sender === 'chatbot') {
+        profilePic.src = 'bot-icon.png'; 
+        profilePic.src = 'default-profile.png'; 
+    }
+    profilePic.alt = `${username}'s Profile Icon`;
     profilePic.classList.add('profile-pic');
 
     const messageBubble = document.createElement('div');
@@ -386,9 +441,7 @@ function generateChatbotResponse(userInput) {
         return 'To add a review, navigate to the product page and click on the "Add Review" button.';
     } else if (lowercaseInput.includes('update profile')) {
         return 'To update your profile, go to your profile page and click on the "Edit Profile" button.';
-    } else if (lowercaseInput.includes('contact support')) {
-        return 'You can contact support by clicking on the "Contact Support" link at the bottom of the page.';
-    } else if (lowercaseInput.includes('log out')) {
+    } else if (lowercaseInput.includes('logout','log out')) {
         return 'To log out, click on your profile icon at the top right corner and select "Log Out" from the dropdown menu.';
     } else {
         return 'I\'m not sure how to help with that. Please ask a different question or contact support.';
