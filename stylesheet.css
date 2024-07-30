@@ -228,3 +228,31 @@
     font-size: 16px;
     line-height: 1.6;
 }
+
+.phone img {
+    transition: transform 0.2s;
+}
+
+.phone img:hover {
+    transform: scale(1.5); 
+}
+
+.magnifier-container {
+    position: relative;
+    display: inline-block;
+}
+
+.magnifier-glass {
+    position: absolute;
+    border-radius: 50%;
+    cursor: zoom-in;
+    pointer-events: none;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    border: 1px solid #ccc;
+    transition: opacity 0.2s;
+    opacity: 0;
+}
+
+.magnifier-glass.visible {
+    opacity: 1;
+}
