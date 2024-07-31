@@ -76,34 +76,50 @@ fetch('data.json')
         displayPhones(phonesData);
     });
 
-function displayPhones(phones) {
-    const phoneList = document.getElementById('phoneList');
-    phoneList.innerHTML = '';
-    phones.forEach(phone => {
-        const phoneDiv = document.createElement('div');
-        phoneDiv.classList.add('phone');
-        phoneDiv.setAttribute('onclick', `showSpecs('${phone.name}')`);
-        phoneDiv.innerHTML = `
-            <img src="${phone.image}" alt="${phone.name}">
-            <div class="details">
-                <h3>${phone.name}</h3>
-                <p>${phone.details}</p>
-            </div>
-        `;
-        phoneList.appendChild(phoneDiv);
-    });
-}
+    let allPhones = []; 
+
+    function displayPhones(phones, showAll = false) {
+        const phoneList = document.getElementById('phoneList');
+        phoneList.innerHTML = '';
+        
+        const phonesToShow = showAll ? phones : phones.slice(0, 5);
+        
+        phonesToShow.forEach(phone => {
+            const phoneDiv = document.createElement('div');
+            phoneDiv.classList.add('phone');
+            phoneDiv.setAttribute('onclick', `showSpecs('${phone.name}')`);
+            phoneDiv.innerHTML = `
+                <img src="${phone.image}" alt="${phone.name}">
+                <div class="details">
+                    <h3>${phone.name}</h3>
+                    <p>${phone.details}</p>
+                </div>
+            `;
+            phoneList.appendChild(phoneDiv);
+        });
+    
+        if (!showAll && phones.length > 5) {
+            const showAllButton = document.createElement('button');
+            showAllButton.textContent = 'Show All Phones';
+            showAllButton.onclick = () => displayPhones(phones, true);
+            phoneList.appendChild(showAllButton);
+        }
+    }
 
 function filterPhones(brand) {
-    const filteredPhones = brand === 'All' ? phonesData : phonesData.filter(phone => phone.brand === brand);
+    const brandToCompare = brand.toUpperCase();
+
+    const filteredPhones = brandToCompare === 'ALL' 
+        ? phonesData 
+        : phonesData.filter(phone => phone.brand.toUpperCase() === brandToCompare);
+
     displayPhones(filteredPhones);
 }
-
 function createMagnifier(imageElement) {
     const magnifierGlass = document.createElement('div');
     magnifierGlass.classList.add('magnifier-glass');
-    magnifierGlass.style.width = '100px';  // Diameter of magnifier
-    magnifierGlass.style.height = '100px'; // Diameter of magnifier
+    magnifierGlass.style.width = '100px';  
+    magnifierGlass.style.height = '100px'; 
     magnifierGlass.style.backgroundImage = `url(${imageElement.src})`;
     magnifierGlass.style.backgroundRepeat = 'no-repeat';
     magnifierGlass.style.backgroundSize = `${imageElement.width * 2}px ${imageElement.height * 2}px`;  // Adjust based on the zoom level
@@ -159,9 +175,9 @@ function showSpecs(phoneName) {
     `;
     
     document.getElementById('myModal').style.display = 'block';
-    showReviews();  // Ensure reviews are shown when specs are shown
+    showReviews(); 
 
-    // Apply magnifier effect to the modal image
+  
     const specsImage = document.getElementById('specs-image');
     createMagnifier(specsImage);
 }
@@ -239,8 +255,8 @@ function likeReview(reviewId) {
     if (!review) {
         review = selectedPhone.reviews.find(r => r.id === reviewId);
         if (review) {
-            review = { ...review }; // Make a copy to modify
-            reviews.push(review); // Add to local storage
+            review = { ...review }; 
+            reviews.push(review);
         }
     }
 
@@ -269,9 +285,8 @@ function dislikeReview(reviewId) {
     if (!review) {
         review = selectedPhone.reviews.find(r => r.id === reviewId);
         if (review) {
-            review = { ...review }; // Make a copy to modify
-            reviews.push(review); // Add to local storage
-        }
+            review = { ...review }; 
+            reviews.push(review); 
     }
 
     if (review) {
@@ -300,7 +315,6 @@ function showReviews() {
     const storedReviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     const initialReviews = selectedPhone.reviews || [];
 
-    // Combine initial reviews with stored reviews, giving priority to stored reviews
     const reviews = [...initialReviews, ...storedReviews.filter(storedReview => 
         !initialReviews.some(initialReview => initialReview.id === storedReview.id))];
 
