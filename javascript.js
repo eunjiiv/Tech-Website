@@ -102,11 +102,11 @@ function filterPhones(brand) {
 function createMagnifier(imageElement) {
     const magnifierGlass = document.createElement('div');
     magnifierGlass.classList.add('magnifier-glass');
-    magnifierGlass.style.width = '100px'; 
-    magnifierGlass.style.height = '100px';
+    magnifierGlass.style.width = '100px';  // Diameter of magnifier
+    magnifierGlass.style.height = '100px'; // Diameter of magnifier
     magnifierGlass.style.backgroundImage = `url(${imageElement.src})`;
     magnifierGlass.style.backgroundRepeat = 'no-repeat';
-    magnifierGlass.style.backgroundSize = `${imageElement.width * 2}px ${imageElement.height * 2}px`;
+    magnifierGlass.style.backgroundSize = `${imageElement.width * 2}px ${imageElement.height * 2}px`;  // Adjust based on the zoom level
     
     const container = document.createElement('div');
     container.classList.add('magnifier-container');
@@ -159,8 +159,9 @@ function showSpecs(phoneName) {
     `;
     
     document.getElementById('myModal').style.display = 'block';
-    showReviews(); 
+    showReviews();  // Ensure reviews are shown when specs are shown
 
+    // Apply magnifier effect to the modal image
     const specsImage = document.getElementById('specs-image');
     createMagnifier(specsImage);
 }
@@ -238,8 +239,8 @@ function likeReview(reviewId) {
     if (!review) {
         review = selectedPhone.reviews.find(r => r.id === reviewId);
         if (review) {
-            review = { ...review };
-            reviews.push(review);
+            review = { ...review }; // Make a copy to modify
+            reviews.push(review); // Add to local storage
         }
     }
 
@@ -268,8 +269,9 @@ function dislikeReview(reviewId) {
     if (!review) {
         review = selectedPhone.reviews.find(r => r.id === reviewId);
         if (review) {
-            review = { ...review };
-            reviews.push(review); 
+            review = { ...review }; // Make a copy to modify
+            reviews.push(review); // Add to local storage
+        }
     }
 
     if (review) {
@@ -298,6 +300,7 @@ function showReviews() {
     const storedReviews = JSON.parse(localStorage.getItem(`reviews_${selectedPhone.name}`)) || [];
     const initialReviews = selectedPhone.reviews || [];
 
+    // Combine initial reviews with stored reviews, giving priority to stored reviews
     const reviews = [...initialReviews, ...storedReviews.filter(storedReview => 
         !initialReviews.some(initialReview => initialReview.id === storedReview.id))];
 
