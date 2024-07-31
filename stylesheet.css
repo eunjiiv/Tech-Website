@@ -256,3 +256,63 @@
 .magnifier-glass.visible {
     opacity: 1;
 }
+#favorites {
+    display: none; 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #8e2de2, #4a00e0);
+    justify-content: center;
+    align-items: center;
+}
+
+#favorites.visible {
+    display: flex;
+}
+
+#favorites h2 {
+    color: #fff; 
+    margin-bottom: 20px;
+}
+
+#favorite-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.favorite-phone {
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 150px;
+    text-align: center;
+}
+
+.favorite-phone img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+.close-button {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: none;
+    border: none;
+    color: #fff;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+#favorites.visible {
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
